@@ -55,8 +55,8 @@ public class SellerListController implements Initializable {
 	private ObservableList<Seller> obsList;
 	
 	@FXML
-	public void onBtExitAction() {
-		System.out.println("Exiting");
+	public void onBtExitAction(ActionEvent event) {
+		Utils.currentStage(event).close();
 	}
 	
 	@FXML
