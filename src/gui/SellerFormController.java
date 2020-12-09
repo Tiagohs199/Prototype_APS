@@ -1,6 +1,7 @@
 package gui;
 
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -17,6 +18,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import model.entities.Seller;
@@ -37,13 +39,19 @@ public class SellerFormController implements Initializable{
 	@FXML
 	private TextField txtEmail;
 	@FXML
-	private TextField txtBirthDate;
+	private DatePicker dbtBirthDate;
 	@FXML
 	private TextField txtBaseSalary;
 	@FXML
 	private TextField txtDepartment;
 	@FXML
 	private Label labelErrorName;
+	@FXML
+	private Label labelErrorEmail;
+	@FXML
+	private Label labelErrorBirthDate;
+	@FXML
+	private Label labelErrorbaseSalary;
 	@FXML
 	private Button btSave;
 	@FXML
@@ -120,9 +128,9 @@ public class SellerFormController implements Initializable{
 		Contraints.setTextFieldInteger(txtId);
 		Contraints.setTextFielsMaxLength(txtName, 30);
 		Contraints.setTextFielsMaxLength(txtEmail, 20);
-		Contraints.setTextFieldInteger(txtBirthDate);
 		Contraints.setTextFieldDouble(txtBaseSalary);
 		Contraints.setTextFielsMaxLength(txtDepartment, 10);
+		Utils.formatDatePicker(dbtBirthDate, "dd/MM/yyyy");
 	}
 	public void updateFormData() {
 		if(entity == null) {
@@ -131,9 +139,12 @@ public class SellerFormController implements Initializable{
 		txtId.setText(String.valueOf(entity.getId()));
 		txtName.setText(entity.getName());
 		txtEmail.setText(entity.getEmail());
-		txtBirthDate.setText(String.valueOf(entity.getBirthDate()));
 		txtBaseSalary.setText(String.valueOf(entity.getBaseSalary()));
 		txtDepartment.setText(String.valueOf(entity.getDepartment()));
+		dbtBirthDate.setValue(LocalDate.ofEpochDay(entity.getBirthDate().getTime()));
+		//if(entity.getBirthDate() != null){
+		//dbtBirthDate.setValue(LocalDate.ofInstant(entity.getBirthDate().toInstant(), ZoneId.systemDefault()));
+		//}
 	}
 	private void setErrorMessage(Map<String, String> error) {
 		Set<String> fields = error.keySet();
